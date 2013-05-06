@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>fr.smile.dirtech</groupId>
+	<artifactId>webcontent-preview</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>Liferay Smile project parent</name>
+	<description>Provides a full maven Smile SDK</description>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<!-- Must prefix ext-webcontent-preview here Sub module equal webcontent-preview-ext 
+			and it is mandatory for Liferay to keep suffixe -ext to recognize plugin 
+			type during liferay custom deployment -->
+		<module>webcontent-preview-hooks</module>
+		<module>webcontent-preview-portlets</module>
+	</modules>
+
+	<properties>
+		<liferay.version>6.1.1</liferay.version>
+		<!--plugin version -->
+		<maven.resources.plugin.version>2.5</maven.resources.plugin.version>
+		<maven.compiler.plugin.version>3.0</maven.compiler.plugin.version>
+		<liferay.maven.plugin.version>6.1.1</liferay.maven.plugin.version>
+
+		<liferay.app.server.dir>/home/dabel/projets/previsu/dev/liferay-portal-6.1.1-ce-ga2</liferay.app.server.dir>
+		<liferay.app.server.portal.dir>${liferay.app.server.dir}/tomcat-7.0.27/webapps/ROOT</liferay.app.server.portal.dir>
+		<liferay.app.server.lib.global.dir>${liferay.app.server.dir}/tomcat-7.0.27/lib</liferay.app.server.lib.global.dir>
+		<liferay.auto.deploy.dir>${liferay.app.server.dir}/deploy</liferay.auto.deploy.dir>
+		<liferay.app.server.deploy.dir>${liferay.app.server.dir}/tomcat-7.0.27/webapps/</liferay.app.server.deploy.dir>
+
+		<!-- Servlet/Jsp/Portlet version -->
+		<portlet.version>2.0</portlet.version>
+		<servlet.version>2.4</servlet.version>
+		<jsp.version>2.0</jsp.version>
+		<!-- compiler properties -->
+		<source.encoding>UTF-8</source.encoding>
+		<resource.encoding>UTF-8</resource.encoding>
+		<compiler.source.version>1.5</compiler.source.version>
+		<compiler.target.version>1.5</compiler.target.version>
+		<!-- Preview additional dependencies -->
+		<esigate.version>4.0</esigate.version>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.liferay.maven.plugins</groupId>
+					<artifactId>liferay-maven-plugin</artifactId>
+					<version>${liferay.maven.plugin.version}</version>
+					<configuration>
+						<autoDeployDir>${liferay.auto.deploy.dir}</autoDeployDir>
+						<appServerDeployDir>${liferay.app.server.deploy.dir}</appServerDeployDir>
+						<appServerLibGlobalDir>${liferay.app.server.lib.global.dir}</appServerLibGlobalDir>
+						<liferayVersion>${liferay.version}</liferayVersion>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin.version}</version>
+					<configuration>
+						<encoding>${source.encoding}</encoding>
+						<source>${compiler.source.version}</source>
+						<target>${compiler.target.version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven.resources.plugin.version}</version>
+					<configuration>
+						<encoding>${resource.encoding}</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Liferay Portal impl Service -->
+			<dependency>
+				<groupId>com.liferay.portal</groupId>
+				<artifactId>portal-impl</artifactId>
+				<version>${liferay.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Liferay Service -->
+			<dependency>
+				<groupId>com.liferay.portal</groupId>
+				<artifactId>portal-service</artifactId>
+				<version>${liferay.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Liferay Bridges -->
+			<dependency>
+				<groupId>com.liferay.portal</groupId>
+				<artifactId>util-bridges</artifactId>
+				<version>${liferay.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Liferay Util taglib -->
+			<dependency>
+				<groupId>com.liferay.portal</groupId>
+				<artifactId>util-taglib</artifactId>
+				<version>${liferay.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Liferay Util Java -->
+			<dependency>
+				<groupId>com.liferay.portal</groupId>
+				<artifactId>util-java</artifactId>
+				<version>${liferay.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Liferay portal Web -->
+			<dependency>
+				<groupId>com.liferay.portal</groupId>
+				<artifactId>portal-web</artifactId>
+				<version>${liferay.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Servlet/Portlet/Jsp Container -->
+			<dependency>
+				<groupId>javax.portlet</groupId>
+				<artifactId>portlet-api</artifactId>
+				<version>${portlet.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${servlet.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>${jsp.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.esigate</groupId>
+				<artifactId>esigate-core</artifactId>
+				<version>${esigate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.esigate</groupId>
+				<artifactId>esigate-taglib</artifactId>
+				<version>${esigate.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- =========================== -->
+	<!-- = Repositories definition = -->
+	<!-- =========================== -->
+	<!-- <repositories> <repository> <id>nexus.liferay.releases</id> <url>https://pic-java.smile.fr/nexus/content/repositories/LiferaySmile/</url> 
+		<snapshots> <enabled>false</enabled> </snapshots> </repository> </repositories> -->
+
+	<!-- ================================== -->
+	<!-- = Plugin Repositories definition = -->
+	<!-- ================================== -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>smile-archetypes</id>
+			<url>http://pic-java.smile.fr/nexus/content/repositories/archetypesRepository/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<!-- =========================== -->
+	<!-- = Distribution management = -->
+	<!-- =========================== -->
+	<distributionManagement>
+		<repository>
+			<id>nexus.internal.releases</id>
+			<url>https://pic-java.smile.fr/nexus/content/repositories/InternalSmileReleases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus.internal.snapshots</id>
+			<url>https://pic-java.smile.fr/nexus/content/repositories/InternalSmileSnapshots/</url>
+		</snapshotRepository>
+		<site>
+			<id>maven.doc.smile</id>
+			<url>scp://pic-java.vitry.intranet/var/www/${project.groupId}/${project.artifactId}</url>
+		</site>
+	</distributionManagement>
+
+
+	<!-- ============== -->
+	<!-- = Developers = -->
+	<!-- ============== -->
+	<developers>
+		<developer>
+			<id>dabel</id>
+			<name>Daphné Bellemin</name>
+			<email>dabel@smile.fr</email>
+			<organization>Smile</organization>
+			<organizationUrl>http://www.smile.fr</organizationUrl>
+			<roles>
+				<role>Lead developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<!-- ============================= -->
+	<!-- = Source Control management = -->
+	<!-- ============================= -->
+	<scm>
+		<!-- FIXME: configure SCM -->
+		<connection>scm:svn:https://sources.smile.fr/svn/projectname-root/trunk</connection>
+		<developerConnection>scm:svn:https://sources.smile.fr/svn/projectname-root/trunk</developerConnection>
+		<url>https://sources.smile.fr/svn/projectname-root/trunk</url>
+	</scm>
+
+	
+</project>
